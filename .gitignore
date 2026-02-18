@@ -1,0 +1,7 @@
+jobs.json
+offset.json
+app.log
+site.db
+.env
+proxies.json
+__pycache__
