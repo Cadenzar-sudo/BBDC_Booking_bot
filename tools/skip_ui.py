@@ -81,7 +81,7 @@ def get_slots(auth_token,j_session_id,bbdc_session,target_months,proxy):
     for month in target_months:
        # use to rerun the function to get the other target month slot no
        for month_slot in months_avaliable:
-          if month in month_slot["slotMonthYm"] and month != target_months[0]:
+          if month in month_slot["slotMonthYm"] and month != target_months[0]: 
             target_month_lst.append(month)
           if target_months[0] in month_slot["slotMonthYm"]: #check if target month is inside slots retrieved
              target_inside = True

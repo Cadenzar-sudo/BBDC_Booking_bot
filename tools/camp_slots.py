@@ -28,10 +28,10 @@ def camp_slots(username,password,description,target_month_lst,no_of_reloads,relo
       while reload_counter < no_of_reloads:
             for i in range(36): # reload 36 times then take a 2 minute pause, if reloaded 270 times stop
               logging.info(reload_counter+1)
+              time.sleep(reload_time + random.randint(0,3) + random.random()) # only wait when looking for slots not during booking slots checking process
               if reload_counter >= no_of_reloads: break # break if reload counter above no of reloads
               target_month_lst_tmp = target_month_lst
               while len(target_month_lst_tmp) != 0: #if target month is inside lst, get that months slots
-                time.sleep(reload_time + random.randint(0,3) + random.random())
                 slots_lst,target_month_lst_tmp = get_slots(auth_token=auth_token,j_session_id=jsession,
                           bbdc_session=bbdc_session,
                           target_months=target_month_lst_tmp,proxy=proxy)
