@@ -214,11 +214,12 @@ def solve_capcha(slots_lst,username,description,buffer,auth_token,jsession,bbdc_
           # Specific logic for Chee Heng
           if username == "525E03042006":
               course_type = "3A"
-              is_weekend = dt_sg.weekday() in [5, 6] # Sat, Sun
-              is_friday_evening = (dt_sg.weekday() == 4 and dt_sg.time() >= time(19, 0))
+              tmp.append(slot) # disable weekend/friday only for Chee Heng but switching course type to auto is still needed
+              # is_weekend = dt_sg.weekday() in [5, 6] # Sat, Sun
+              # is_friday_evening = (dt_sg.weekday() == 4 and dt_sg.time() >= time(19, 0))
               
-              if is_weekend or is_friday_evening:
-                  tmp.append(slot)
+              # if is_weekend or is_friday_evening:
+              #     tmp.append(slot)
                   
           # Logic for everyone else
           else:
