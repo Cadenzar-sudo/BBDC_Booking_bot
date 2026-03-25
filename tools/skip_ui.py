@@ -195,6 +195,7 @@ def book_slots(auth_token,j_session_id,capcha,capcha_token,capcha_verify_id,slot
 
 def solve_capcha(slots_lst,username,description,buffer,auth_token,jsession,bbdc_session,proxy):
     tmp = []
+    chat_id = None # use .env admin chat id by default
     for slot in slots_lst:
       # 1. Setup Timezones
       sg_timezone = pytz.timezone("Asia/Singapore")
@@ -213,6 +214,7 @@ def solve_capcha(slots_lst,username,description,buffer,auth_token,jsession,bbdc_
           
           # Specific logic for Chee Heng
           if username == "525E03042006":
+              chat_id = "1721952100"
               course_type = "3A"
               tmp.append(slot) # disable weekend/friday only for Chee Heng but switching course type to auto is still needed
               # is_weekend = dt_sg.weekday() in [5, 6] # Sat, Sun
@@ -253,9 +255,9 @@ def solve_capcha(slots_lst,username,description,buffer,auth_token,jsession,bbdc_
           for slot_info_json in slots_lst:
             if slot_info_json["success"]:
               slot_datetime_str = f"{slot_info_json['slotRefDate']} {slot_info_json['startTime']}-{slot_info_json['endTime']}"
-              notify(f"{slot_datetime_str} was booked for {description}")
+              notify(f"{slot_datetime_str} was booked for {description}",chat_id=chat_id)
             elif "insufficient fund" in slot_info_json["message"]:
-              notify(f"low funds for {description}")
+              notify(f"low funds for {description}",chat_id=chat_id)
               return "stop" # break if out of money
         else: # retry and get human to solve if needed
           logging.info(response)
@@ -284,9 +286,9 @@ def solve_capcha(slots_lst,username,description,buffer,auth_token,jsession,bbdc_
           for slot_info_json in slots_lst:
             if slot_info_json["success"]:
               slot_datetime_str = f"{slot_info_json['slotRefDate']} {slot_info_json['startTime']}-{slot_info_json['endTime']}"
-              notify(f"{slot_datetime_str} was booked for {description}")
+              notify(f"{slot_datetime_str} was booked for {description}",chat_id=chat_id)
             elif "insufficient fund" in slot_info_json["message"]:
-              notify(f"low funds for {description}")
+              notify(f"low funds for {description}",chat_id=chat_id)
               return "stop" # break if out of money
       elif capcha == "invalid": # if capcha was not given within 5 minutes, cancel booking
         notify("capcha not answered in time, booking cancelled")
@@ -304,9 +306,9 @@ def solve_capcha(slots_lst,username,description,buffer,auth_token,jsession,bbdc_
           for slot_info_json in slots_lst:
             if slot_info_json["success"]:
               slot_datetime_str = f"{slot_info_json['slotRefDate']} {slot_info_json['startTime']}-{slot_info_json['endTime']}"
-              notify(f"{slot_datetime_str} was booked for {description}")
+              notify(f"{slot_datetime_str} was booked for {description}",chat_id=chat_id)
             elif "insufficient fund" in slot_info_json["message"]:
-              notify(f"low funds for {description}")
+              notify(f"low funds for {description}",chat_id=chat_id)
               return "stop" # break if out of money
     return
 

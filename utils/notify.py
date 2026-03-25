@@ -31,9 +31,10 @@ def fetch_with_manual_retry(url, retries=3,files=None,data=None):
 
 load_dotenv()
 
-def notify(message,image_base64=None):
+def notify(message,image_base64=None,chat_id=None):
   TOKEN = os.getenv("TELEGRAM_TOKEN")
-  chat_id = os.getenv("TELEGRAM_CHAT_ID")
+  if not chat_id: # use admin chat_id by default if chat_id not defined
+    chat_id = os.getenv("TELEGRAM_CHAT_ID")
 
   if image_base64 == None:
     url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}"
