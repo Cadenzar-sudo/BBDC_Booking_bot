@@ -1,0 +1,12 @@
+services:
+  web:
+    build: .
+    container_name: BBDC_Booking_bot
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=production
+      - TZ=Asia/Singapore  
+    restart: always
